@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  vehicle_db:
+    image: postgres:12
+    restart: always
+    ports:
+      - 8432:5432
+    environment:
+      POSTGRES_DB: vehicle
+      POSTGRES_USER: vehicle
+      POSTGRES_PASSWORD: 'test'
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+  vehicle_service:
+    image: maxtuzz/vehicle_service:latest
+    expose:
+      - 8090
+    ports:
+      - 8090:8090
+    volumes:
+      - ./api:/usr/src/app/
+    links:
+      - vehicle_db
+    environment:
+      DB_URL: jdbc:postgresql://vehicle_db/vehicle
+
+volumes:
+  database_data:
+    driver: local

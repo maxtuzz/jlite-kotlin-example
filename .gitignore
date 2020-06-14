@@ -1,0 +1,10 @@
+.iml
+.idea
+target/
+
+/server/.settings/
+/server/.classpath
+/server/.project
+/flutter_client/
+/client/node_modules
+/server/tuzzy-server.iml

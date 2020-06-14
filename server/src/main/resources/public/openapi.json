@@ -1,0 +1,491 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "",
+    "version" : ""
+  },
+  "paths" : {
+    "/" : {
+      "get" : {
+        "summary" : "Get meta returns a simple hateoas meta payload for initial navigation of the api",
+        "description" : "",
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LinkResource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drivers" : {
+      "get" : {
+        "summary" : "Get all drivers",
+        "description" : "",
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Driver>"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create new driver",
+        "description" : "",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Driver"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "No content"
+          }
+        }
+      }
+    },
+    "/drivers/:licenseNumber" : {
+      "get" : {
+        "summary" : "Get a driver by their license",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "licenseNumber",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Driver"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Updates an existing driver",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "licenseNumber",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Driver"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a driver",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "licenseNumber",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          }
+        }
+      }
+    },
+    "/drivers/:licenseNumber/messages" : {
+      "get" : {
+        "summary" : "",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "licenseNumber",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "licenseNumber",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Message"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "No content"
+          }
+        }
+      }
+    },
+    "/vehicles" : {
+      "get" : {
+        "summary" : "Get vehicles",
+        "description" : "",
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Vehicle>"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create new vehicle entry",
+        "description" : "",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Vehicle"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "No content"
+          }
+        }
+      }
+    },
+    "/vehicles/:numberPlate" : {
+      "get" : {
+        "summary" : "Fetch a vehicle information by it's number plate",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "numberPlate",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Vehicle"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Update a vehicle entry",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "numberPlate",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Vehicle"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a vehicle",
+        "description" : "",
+        "parameters" : [ {
+          "name" : "numberPlate",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Driver" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "licenseNumber" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "Driver>" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/T"
+            }
+          }
+        }
+      },
+      "HalLink" : {
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "LinkResource" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          }
+        }
+      },
+      "Links" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/HalLink"
+            }
+          },
+          "self" : {
+            "$ref" : "#/components/schemas/HalLink"
+          }
+        }
+      },
+      "Message" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "messageContent" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "Object" : {
+        "type" : "object"
+      },
+      "T" : {
+        "type" : "object"
+      },
+      "Vehicle" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "driverLicense" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "plateNumber" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "make" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "model" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "year" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "telematics" : {
+            "$ref" : "#/components/schemas/VehicleTelematics",
+            "nullable" : false
+          }
+        }
+      },
+      "Vehicle>" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/T"
+            }
+          }
+        }
+      },
+      "VehicleTelematics" : {
+        "type" : "object",
+        "properties" : {
+          "temperature" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "pressure" : {
+            "type" : "string"
+          },
+          "speed" : {
+            "type" : "string"
+          },
+          "latitude" : {
+            "type" : "string"
+          },
+          "longitude" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

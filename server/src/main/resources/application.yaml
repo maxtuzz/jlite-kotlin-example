@@ -1,0 +1,24 @@
+# Google cloud run will use PORT environmental variable to bootstrap app
+app:
+  name: vehicle-api
+  port: ${PORT:8090}
+
+  ## Kubernetes environmental variables
+  k_service: ${K_SERVICE}
+  k_revision: ${K_REVISION}
+  k_configuration: ${K_CONFIGURATION}
+
+##
+## Postgres setup - To use local docker instance see src/test/main/StartPostgresDocker.main()
+##
+ebean:
+  dbSchema: vehicle
+  migration:
+    run: true
+
+datasource:
+  db:
+    username: ${DB_USER:vehicle}
+    password: ${DB_PASSWORD:test}
+    url: ${DB_URL:jdbc:postgresql://localhost:9432/vehicle}
+    driver: ${DB_DRIVER:org.postgresql.Driver}

@@ -1,0 +1,3 @@
+entity-packages: io.jlite.example.vehicle.domain
+top-packages: io.jlite.example.vehicle
+profile-location: true

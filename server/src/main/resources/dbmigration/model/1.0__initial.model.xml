@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="driver" identityType="external" pkName="pk_driver">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="name" type="varchar(45)" notnull="true" unique="uq_driver_name"/>
+            <column name="license_number" type="varchar(45)" notnull="true" unique="uq_driver_license_number"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+        </createTable>
+        <createTable name="message" identityType="external" pkName="pk_message">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="driver_id" type="uuid" notnull="true" references="driver.id" foreignKeyName="fk_message_driver_id" foreignKeyIndex="ix_message_driver_id"/>
+            <column name="message_content" type="varchar" notnull="true"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+        </createTable>
+        <createTable name="vehicle" identityType="external" pkName="pk_vehicle">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="driver_id" type="uuid" notnull="true" references="driver.id" foreignKeyName="fk_vehicle_driver_id" foreignKeyIndex="ix_vehicle_driver_id"/>
+            <column name="plate_number" type="varchar" notnull="true" unique="uq_vehicle_plate_number"/>
+            <column name="make" type="varchar" notnull="true"/>
+            <column name="model" type="varchar" notnull="true"/>
+            <column name="year" type="varchar" notnull="true"/>
+            <column name="telematics" type="json" notnull="true"/>
+            <column name="version" type="bigint" notnull="true"/>
+            <column name="when_created" type="timestamp" notnull="true"/>
+            <column name="when_modified" type="timestamp" notnull="true"/>
+        </createTable>
+    </changeSet>
+</migration>

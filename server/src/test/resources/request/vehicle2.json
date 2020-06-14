@@ -1,0 +1,14 @@
+{
+  "driverLicense": "Tuzzolino",
+  "plateNumber": "UPDATED_PLATE",
+  "make": "Tesla",
+  "model": "Model S",
+  "year": "2020",
+  "telematics": {
+    "pressure": "1psi",
+    "temperature": "20c",
+    "speed": "0km",
+    "latitude": "-36.848461",
+    "longitude": "174.763336"
+  }
+}

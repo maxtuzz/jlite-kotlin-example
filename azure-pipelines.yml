@@ -1,0 +1,113 @@
+# Vehicle API service example pipeline
+
+trigger:
+  - master
+
+resources:
+  containers:
+    - container: pg11
+      image: postgres:11
+      ports:
+        - 6432:5432
+      env:
+        POSTGRES_PASSWORD: admin
+
+variables:
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '--batch-mode -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Backend
+        services:
+          pg11: pg11
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'maven | "$(Agent.OS)" | **/pom.xml'
+              restoreKeys: |
+                maven | "$(Agent.OS)"
+                maven
+              path: $(MAVEN_CACHE_FOLDER)
+            displayName: Cache Maven local repo
+
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'server/pom.xml'
+              mavenOptions: '-Xmx3072m'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              jdkArchitectureOption: 'x64'
+              publishJUnitResults: true
+              testResultsFiles: '**/TEST-*.xml'
+              codeCoverageToolOption: 'JaCoCo'
+              options: '$(MAVEN_OPTS)'
+              goals: 'package'
+            displayName: 'Maven Build & Test'
+
+          # Save jar and jar libs
+          - publish: $(System.DefaultWorkingDirectory)/server/target/app.jar
+            artifact: app.jar
+          - publish: $(System.DefaultWorkingDirectory)/server/target/lib
+            artifact: lib
+
+
+      - job: Frontend
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+              workingDir: 'client'
+
+          - task: Npm@1
+            inputs:
+              command: 'custom'
+              workingDir: 'client'
+              customCommand: 'run-script build'
+
+          # Save webapp build
+          - publish: $(System.DefaultWorkingDirectory)/client/build
+            artifact: webapp
+
+  - stage: Package
+    jobs:
+      - job: Build
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'lib'
+              targetPath: '$(System.DefaultWorkingDirectory)/lib'
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'app.jar'
+              targetPath: '$(System.DefaultWorkingDirectory)'
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'webapp'
+              targetPath: '$(System.DefaultWorkingDirectory)/webapp'
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Write your commands here
+                
+                echo Evaluating working directory
+                pwd
+                ls -lah
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerhub'
+              repository: 'maxtuzz/jlite-example-api'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              buildContext: '$(System.DefaultWorkingDirectory)'
+              tags: |
+                alpha-$(Build.BuildId)
+                latest
