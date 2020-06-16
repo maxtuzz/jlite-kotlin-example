@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.javalin.kotlin</groupId>
+    <groupId>io.jlite.example</groupId>
     <artifactId>vehicle-api</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
