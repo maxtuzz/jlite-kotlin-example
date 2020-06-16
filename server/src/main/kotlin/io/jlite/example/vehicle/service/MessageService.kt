@@ -11,7 +11,7 @@ class MessageService(private val driverService: DriverService) {
      * Saves a message sent from specific driver
      */
     fun save(driverLicense: String, message: Message) {
-        val dDriver = driverService.getDDriver(driverLicense)
+        val dDriver = driverService.findByLicense(driverLicense)
         DMessage(dDriver, message.messageContent).save()
     }
 
