@@ -12,7 +12,7 @@ class VehicleService(private val driverService: DriverService) {
      * Create a vehicle entry
      */
     fun createVehicle(vehicle: Vehicle) {
-        val dDriver = driverService.getDDriver(vehicle.driverLicense)
+        val dDriver = driverService.findByLicense(vehicle.driverLicense)
 
         DVehicle(
             dDriver,
@@ -28,12 +28,11 @@ class VehicleService(private val driverService: DriverService) {
      * Returns a vehicle entity bean with specified plate number
      */
     fun getVehicle(plateNumber: String): Vehicle {
-        val dVehicle = getDVehicle(plateNumber)
-
+        val dVehicle = findVehicleByPlate(plateNumber)
         return Vehicle(dVehicle)
     }
 
-    private fun getDVehicle(plateNumber: String): DVehicle {
+    private fun findVehicleByPlate(plateNumber: String): DVehicle {
         return QDVehicle()
             .plateNumber.eq(plateNumber)
             .findOne() ?: throw NotFoundResponse("Cannot find a vehicle with that rego")
@@ -51,8 +50,8 @@ class VehicleService(private val driverService: DriverService) {
      */
     fun updateVehicle(plateNumber: String, vehicleUpdate: Vehicle) {
         // Verify driver assigned to vehicle exists
-        val dDriver = driverService.getDDriver(vehicleUpdate.driverLicense)
-        val dVehicle = getDVehicle(plateNumber)
+        val dDriver = driverService.findByLicense(vehicleUpdate.driverLicense)
+        val dVehicle = findVehicleByPlate(plateNumber)
         dVehicle.driver = dDriver
         dVehicle.plateNumber = vehicleUpdate.plateNumber
         dVehicle.make = vehicleUpdate.make
@@ -67,6 +66,6 @@ class VehicleService(private val driverService: DriverService) {
      * Deletes vehicle entry by plate number
      */
     fun delete(plateNumber: String) {
-        getDVehicle(plateNumber).delete()
+        findVehicleByPlate(plateNumber).delete()
     }
 }

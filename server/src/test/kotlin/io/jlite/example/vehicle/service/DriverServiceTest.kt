@@ -49,7 +49,7 @@ class DriverServiceTest {
         val updatedLicenseNumber = "Hello-There"
         driverService.updateDriver("TEST_LICENSE", Driver("Kenobi", updatedLicenseNumber))
 
-        val driver = driverService.getDDriver(updatedLicenseNumber)
+        val driver = driverService.findByLicense(updatedLicenseNumber)
 
         Assertions.assertAll(
             Executable { assertThat(driver).isNotNull },
@@ -59,14 +59,14 @@ class DriverServiceTest {
 
     @Test
     fun `Delete driver`() {
-        val dDriver = driverService.getDDriver(license)
+        val dDriver = driverService.findByLicense(license)
 
         assertNotNull(dDriver)
 
         driverService.deleteDriver(license)
 
         assertFailsWith<NotFoundResponse> {
-            driverService.getDDriver(license)
+            driverService.findByLicense(license)
         }
     }
 }

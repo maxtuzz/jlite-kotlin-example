@@ -12,19 +12,18 @@ class DriverService {
         DDriver(name, license).save()
     }
 
-    fun getDDriver(licenseNumber: String): DDriver {
+    fun findByLicense(licenseNumber: String): DDriver {
         return QDDriver().licenseNumber.eq(licenseNumber).findOne()
             ?: throw NotFoundResponse("A driver with that license was not found")
     }
 
     fun getDriver(licenseNumber: String): Driver {
-        val dDriver = getDDriver(licenseNumber)
-
+        val dDriver = findByLicense(licenseNumber)
         return Driver(dDriver.name, dDriver.licenseNumber)
     }
 
     fun updateDriver(licenseNumber: String, updatedDriver: Driver) {
-        val dDriver = getDDriver(licenseNumber)
+        val dDriver = findByLicense(licenseNumber)
         dDriver.name = updatedDriver.name
         dDriver.licenseNumber = updatedDriver.licenseNumber
 
