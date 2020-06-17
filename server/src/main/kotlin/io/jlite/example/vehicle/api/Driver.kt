@@ -7,6 +7,13 @@ import io.javalin.http.Context
  */
 open class Driver(val name: String, val licenseNumber: String): HalResource<Driver>() {
     override fun withHal(ctx: Context): Driver {
-        TODO("Not yet implemented")
+        links.addAll {
+            HalBuilder(ctx)
+                .toDriver("self", licenseNumber)
+                .toMessages("messages", licenseNumber)
+                .build()
+        }
+
+        return this
     }
 }

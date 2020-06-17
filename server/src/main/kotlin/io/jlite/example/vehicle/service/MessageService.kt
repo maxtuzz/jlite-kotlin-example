@@ -10,8 +10,8 @@ class MessageService(private val driverService: DriverService) {
     /**
      * Saves a message sent from specific driver
      */
-    fun save(driverLicense: String, message: Message) {
-        val dDriver = driverService.findByLicense(driverLicense)
+    fun save(message: Message, licenseNumber: String) {
+        val dDriver = driverService.findByLicense(licenseNumber)
         DMessage(dDriver, message.messageContent).save()
     }
 
@@ -22,6 +22,6 @@ class MessageService(private val driverService: DriverService) {
         return QDMessage()
             .driver.licenseNumber.eq(driverLicenseNumber)
             .findList()
-            .map { Message(it.messageContent) }
+            .map { Message(it.messageContent, driverLicenseNumber) }
     }
 }

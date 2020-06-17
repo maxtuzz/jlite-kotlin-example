@@ -148,10 +148,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Message"
-                  }
+                  "$ref" : "#/components/schemas/Message>"
                 }
               }
             }
@@ -395,6 +392,31 @@
           "messageContent" : {
             "type" : "string",
             "nullable" : false
+          },
+          "licenseNumber" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Message>" : {
+        "type" : "object",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/Links",
+            "nullable" : false
+          },
+          "embedded" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/Object"
+            }
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/T"
+            }
           }
         }
       },

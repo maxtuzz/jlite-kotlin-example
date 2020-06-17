@@ -24,6 +24,13 @@ open class Vehicle(
     )
 
     override fun withHal(ctx: Context): Vehicle {
-        TODO("Not yet implemented")
+        links.addAll {
+            HalBuilder(ctx)
+                .toVehicle("self", plateNumber)
+                .toDriver("driver", driverLicense)
+                .build()
+        }
+
+        return this
     }
 }

@@ -33,8 +33,26 @@ class HalBuilder(private val ctx: Context) {
         return this
     }
 
+    fun toVehicle(propertyName: String, plateNumber: String): HalBuilder {
+        links[propertyName] = HalLink("$vehicleBase/$plateNumber")
+
+        return this
+    }
+
     fun toDriverBase(): HalBuilder {
         links["drivers"] = HalLink(driversBase)
+
+        return this
+    }
+
+    fun toDriver(propertyName: String, licenseNumber: String): HalBuilder {
+        links[propertyName] = HalLink("$driversBase/$licenseNumber")
+
+        return this
+    }
+
+    fun toMessages(propertyName: String, driversLicense: String): HalBuilder {
+        links[propertyName] = HalLink("$driversBase/$driversLicense/messages")
 
         return this
     }

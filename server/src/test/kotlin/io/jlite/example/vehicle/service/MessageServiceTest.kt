@@ -27,8 +27,8 @@ class MessageServiceTest {
     @Test
     fun `Create and fetch driver messages`() {
         val message = Message("Picked up cargo")
-        messageService.save(driverLicenseNumber, message)
-        messageService.save(driverLicenseNumber, message)
+        messageService.save(message, driverLicenseNumber)
+        messageService.save(message, driverLicenseNumber)
 
         val messages = messageService.getMessages(driverLicenseNumber)
 
