@@ -14,7 +14,7 @@ class VehicleController(private val vehicleService: VehicleService) {
      */
     @Get
     fun getVehicles(ctx: Context): ListResponse<Vehicle> {
-        return ListResponse(vehicleService.getVehicles())
+        return ListResponse(vehicleService.getVehicles().map { it.withHal(ctx) })
     }
 
     /**
@@ -22,7 +22,7 @@ class VehicleController(private val vehicleService: VehicleService) {
      */
     @Get("/:numberPlate")
     fun getVehicle(numberPlate: String, ctx: Context): Vehicle {
-        return vehicleService.getVehicle(numberPlate)
+        return vehicleService.getVehicle(numberPlate).withHal(ctx)
     }
 
     /**

@@ -14,11 +14,13 @@ import io.jlite.example.vehicle.service.MessageService
 class MessageController(private val messageService: MessageService) {
     @Get
     fun getMessages(licenseNumber: String, ctx: Context): ListResponse<Message> {
-        return ListResponse(messageService.getMessages(licenseNumber)).withHal(ctx)
+        return ListResponse(messageService.getMessages(licenseNumber)
+            .map { it.withHal(ctx) })
+            .withHal(ctx)
     }
 
     @Post
-    fun createMessage(licenseNumber: String, message: Message)  {
+    fun createMessage(licenseNumber: String, message: Message) {
         messageService.save(message, licenseNumber)
     }
 }

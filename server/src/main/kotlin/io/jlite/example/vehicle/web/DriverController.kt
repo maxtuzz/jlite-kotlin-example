@@ -14,7 +14,7 @@ class DriverController(private val driverService: DriverService) {
      */
     @Get
     fun get(ctx: Context): ListResponse<Driver> {
-        return ListResponse(driverService.getDrivers())
+        return ListResponse(driverService.getDrivers().map { it.withHal(ctx) })
             .withHal(ctx)
     }
 
@@ -23,7 +23,7 @@ class DriverController(private val driverService: DriverService) {
      */
     @Get("/:licenseNumber")
     fun getDriver(licenseNumber: String, ctx: Context): Driver {
-        return driverService.getDriver(licenseNumber)
+        return driverService.getDriver(licenseNumber).withHal(ctx)
     }
 
     /**
