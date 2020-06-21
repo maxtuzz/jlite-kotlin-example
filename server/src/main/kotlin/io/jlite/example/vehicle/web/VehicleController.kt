@@ -10,7 +10,8 @@ import io.jlite.example.vehicle.service.VehicleService
 @Path("/vehicles")
 class VehicleController(private val vehicleService: VehicleService) {
     /**
-     * Get vehicles
+     * Get vehicles.
+     * Return a list of all registered vehicles on the platform.
      */
     @Get
     fun getVehicles(ctx: Context): ListResponse<Vehicle> {
@@ -18,7 +19,8 @@ class VehicleController(private val vehicleService: VehicleService) {
     }
 
     /**
-     * Fetch a vehicle information by it's number plate
+     * Fetch a vehicle information by its number plate.
+     * Return a singular vehicle entry.
      */
     @Get("/:numberPlate")
     fun getVehicle(numberPlate: String, ctx: Context): Vehicle {
@@ -26,7 +28,8 @@ class VehicleController(private val vehicleService: VehicleService) {
     }
 
     /**
-     * Create new vehicle entry
+     * Create new vehicle entry.
+     * Create a new vehicle entry to be assigned to a driver.
      */
     @Post
     fun createVehicle(vehicle: Vehicle) {
@@ -35,6 +38,7 @@ class VehicleController(private val vehicleService: VehicleService) {
 
     /**
      * Update a vehicle entry.
+     * Update vehicle details including telemetry.
      */
     @Put("/:numberPlate")
     fun updateVehicle(numberPlate: String, vehicleUpdate: Vehicle) {
@@ -42,7 +46,8 @@ class VehicleController(private val vehicleService: VehicleService) {
     }
 
     /**
-     * Delete a vehicle
+     * Delete a vehicle.
+     * Remove a vehicle entry.
      */
     @Delete("/:numberPlate")
     fun deleteVehicle(numberPlate: String) {

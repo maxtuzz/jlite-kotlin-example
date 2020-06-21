@@ -12,6 +12,10 @@ import io.jlite.example.vehicle.service.MessageService
 @Controller
 @Path("/drivers/:licenseNumber/messages")
 class MessageController(private val messageService: MessageService) {
+    /**
+     * Get driver messages.
+     * Returns all messages driver has sent.
+     */
     @Get
     fun getMessages(licenseNumber: String, ctx: Context): ListResponse<Message> {
         return ListResponse(messageService.getMessages(licenseNumber)
@@ -19,6 +23,10 @@ class MessageController(private val messageService: MessageService) {
             .withHal(ctx)
     }
 
+    /**
+     * Create a new message.
+     * Adds an additional message to drivers chat log.
+     */
     @Post
     fun createMessage(licenseNumber: String, message: Message) {
         messageService.save(message, licenseNumber)

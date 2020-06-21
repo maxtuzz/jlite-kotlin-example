@@ -11,6 +11,7 @@ import io.jlite.example.vehicle.service.DriverService
 class DriverController(private val driverService: DriverService) {
     /**
      * Get all drivers.
+     * Returns a list of drivers based on search parameters.
      */
     @Get
     fun get(ctx: Context): ListResponse<Driver> {
@@ -20,6 +21,7 @@ class DriverController(private val driverService: DriverService) {
 
     /**
      * Get a driver by their license.
+     * Fetches data for a specific driver based on their drivers license number.
      */
     @Get("/:licenseNumber")
     fun getDriver(licenseNumber: String, ctx: Context): Driver {
@@ -28,6 +30,7 @@ class DriverController(private val driverService: DriverService) {
 
     /**
      * Create new driver.
+     * Creates a new driver entry to be assigned to a vehicle or vehicles.
      */
     @Post
     fun createDriver(driver: Driver) {
@@ -36,6 +39,7 @@ class DriverController(private val driverService: DriverService) {
 
     /**
      * Updates an existing driver.
+     * Update driver details including their license details, and their name.
      */
     @Put("/:licenseNumber")
     fun updateDriver(licenseNumber: String, driver: Driver) {
@@ -44,6 +48,7 @@ class DriverController(private val driverService: DriverService) {
 
     /**
      * Delete a driver.
+     * Removed a driver details from the system.
      */
     @Delete("/:licenseNumber")
     fun deleteDriver(licenseNumber: String) {

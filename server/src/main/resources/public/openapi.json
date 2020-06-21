@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "title" : "",
+    "title" : "Coretex Vehicle API",
     "version" : ""
   },
   "paths" : {
@@ -26,14 +26,14 @@
     "/drivers" : {
       "get" : {
         "summary" : "Get all drivers",
-        "description" : "",
+        "description" : "Returns a list of drivers based on search parameters.",
         "responses" : {
           "200" : {
             "description" : "",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Driver>"
+                  "$ref" : "#/components/schemas/Driver"
                 }
               }
             }
@@ -42,7 +42,7 @@
       },
       "post" : {
         "summary" : "Create new driver",
-        "description" : "",
+        "description" : "Creates a new driver entry to be assigned to a vehicle or vehicles.",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -63,7 +63,7 @@
     "/drivers/:licenseNumber" : {
       "get" : {
         "summary" : "Get a driver by their license",
-        "description" : "",
+        "description" : "Fetches data for a specific driver based on their drivers license number.",
         "parameters" : [ {
           "name" : "licenseNumber",
           "in" : "path",
@@ -87,7 +87,7 @@
       },
       "put" : {
         "summary" : "Updates an existing driver",
-        "description" : "",
+        "description" : "Update driver details including their license details, and their name.",
         "parameters" : [ {
           "name" : "licenseNumber",
           "in" : "path",
@@ -114,7 +114,7 @@
       },
       "delete" : {
         "summary" : "Delete a driver",
-        "description" : "",
+        "description" : "Removed a driver details from the system.",
         "parameters" : [ {
           "name" : "licenseNumber",
           "in" : "path",
@@ -132,8 +132,8 @@
     },
     "/drivers/:licenseNumber/messages" : {
       "get" : {
-        "summary" : "",
-        "description" : "",
+        "summary" : "Get driver messages",
+        "description" : "Returns all messages driver has sent.",
         "parameters" : [ {
           "name" : "licenseNumber",
           "in" : "path",
@@ -148,7 +148,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Message>"
+                  "$ref" : "#/components/schemas/Message"
                 }
               }
             }
@@ -156,8 +156,8 @@
         }
       },
       "post" : {
-        "summary" : "",
-        "description" : "",
+        "summary" : "Create a new message",
+        "description" : "Adds an additional message to drivers chat log.",
         "parameters" : [ {
           "name" : "licenseNumber",
           "in" : "path",
@@ -186,14 +186,14 @@
     "/vehicles" : {
       "get" : {
         "summary" : "Get vehicles",
-        "description" : "",
+        "description" : "Return a list of all registered vehicles on the platform.",
         "responses" : {
           "200" : {
             "description" : "",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Vehicle>"
+                  "$ref" : "#/components/schemas/Vehicle"
                 }
               }
             }
@@ -202,7 +202,7 @@
       },
       "post" : {
         "summary" : "Create new vehicle entry",
-        "description" : "",
+        "description" : "Create a new vehicle entry to be assigned to a driver.",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -222,8 +222,8 @@
     },
     "/vehicles/:numberPlate" : {
       "get" : {
-        "summary" : "Fetch a vehicle information by it's number plate",
-        "description" : "",
+        "summary" : "Fetch a vehicle information by its number plate",
+        "description" : "Return a singular vehicle entry.",
         "parameters" : [ {
           "name" : "numberPlate",
           "in" : "path",
@@ -247,7 +247,7 @@
       },
       "put" : {
         "summary" : "Update a vehicle entry",
-        "description" : "",
+        "description" : "Update vehicle details including telemetry.",
         "parameters" : [ {
           "name" : "numberPlate",
           "in" : "path",
@@ -274,7 +274,7 @@
       },
       "delete" : {
         "summary" : "Delete a vehicle",
-        "description" : "",
+        "description" : "Remove a vehicle entry.",
         "parameters" : [ {
           "name" : "numberPlate",
           "in" : "path",
@@ -294,29 +294,6 @@
   "components" : {
     "schemas" : {
       "Driver" : {
-        "type" : "object",
-        "properties" : {
-          "links" : {
-            "$ref" : "#/components/schemas/Links",
-            "nullable" : false
-          },
-          "embedded" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/Object"
-            }
-          },
-          "name" : {
-            "type" : "string",
-            "nullable" : false
-          },
-          "licenseNumber" : {
-            "type" : "string",
-            "nullable" : false
-          }
-        }
-      },
-      "Driver>" : {
         "type" : "object",
         "properties" : {
           "links" : {
@@ -389,28 +366,6 @@
               "$ref" : "#/components/schemas/Object"
             }
           },
-          "messageContent" : {
-            "type" : "string",
-            "nullable" : false
-          },
-          "licenseNumber" : {
-            "type" : "string"
-          }
-        }
-      },
-      "Message>" : {
-        "type" : "object",
-        "properties" : {
-          "links" : {
-            "$ref" : "#/components/schemas/Links",
-            "nullable" : false
-          },
-          "embedded" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/Object"
-            }
-          },
           "content" : {
             "type" : "array",
             "nullable" : false,
@@ -462,28 +417,6 @@
           "telematics" : {
             "$ref" : "#/components/schemas/VehicleTelematics",
             "nullable" : false
-          }
-        }
-      },
-      "Vehicle>" : {
-        "type" : "object",
-        "properties" : {
-          "links" : {
-            "$ref" : "#/components/schemas/Links",
-            "nullable" : false
-          },
-          "embedded" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "$ref" : "#/components/schemas/Object"
-            }
-          },
-          "content" : {
-            "type" : "array",
-            "nullable" : false,
-            "items" : {
-              "$ref" : "#/components/schemas/T"
-            }
           }
         }
       },
